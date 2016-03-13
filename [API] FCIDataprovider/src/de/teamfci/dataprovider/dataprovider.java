@@ -1,7 +1,8 @@
 package de.teamfci.dataprovider;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class dataprovider extends JavaPlugin {
@@ -20,10 +22,14 @@ public class dataprovider extends JavaPlugin {
 				p.sendMessage("§eFCIDataprovider §awurde enabled!");
 			}
 		}
-		List[] list = (List[]) Bukkit.getPluginManager().getPlugins();
-		ArrayList<String> plugins = new ArrayList<String>();
-		for(int i = 0; i < list.length; i++) {
-			
+		Plugin[] list = Bukkit.getPluginManager().getPlugins();
+		List<String> names = new LinkedList<String>();
+		HashMap<String, Boolean> pluginenabled = new HashMap<String, Boolean>();
+		for(Plugin pl : list) {
+			String name = pl.getName();
+			names.add(name);
+			boolean enabled = pl.isEnabled();
+			pluginenabled.put(name, enabled);
 		}
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.sendMessage("§d§m----------------------------");
