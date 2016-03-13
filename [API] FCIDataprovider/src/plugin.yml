@@ -4,3 +4,5 @@ author: TeamFCI
 
 main: de.teamfci.dataprovider.dataprovider
 commands:
+  ple:
+    description: Shows Plugin-Status
