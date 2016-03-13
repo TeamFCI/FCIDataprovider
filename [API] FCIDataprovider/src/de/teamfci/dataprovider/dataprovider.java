@@ -1,6 +1,7 @@
 package de.teamfci.dataprovider;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -260,6 +261,54 @@ public class dataprovider extends JavaPlugin {
 			return null;
 		}
 		return type;
+	}
+	
+	public static void setSpawnLocation(String team, Location loc, Player p) {
+		File file = new File("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		cfg.set("Team.Event Spawn.Location.X", loc.getX());
+		cfg.set("Team.Event Spawn.Location.Y", loc.getY());
+		cfg.set("Team.Event Spawn.Location.Z", loc.getZ());
+		cfg.set("Team.Event Spawn.Location.Yaw", loc.getYaw());
+		cfg.set("Team.Event Spawn.Location.Pitch", loc.getPitch());
+		cfg.set("Team.Event Spawn.Location.World", loc.getWorld().getName());
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			p.sendMessage("§cFehler beim Absepichern der Datei!");
+			p.sendMessage("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			e.printStackTrace();
+		}
+		if (!file.exists()) {
+			Bukkit.broadcastMessage("§c§lFehler: §f§l557");
+			Bukkit.broadcastMessage("§cDatei: config.yml");
+			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
+			return;
+		}
+		p.sendMessage("§aEvent Spawn für Team '§f"+team+"§a' gesetzt!");
+	}
+	
+	public static Location getSpawnLocation(String team, Player p) {
+		File file = new File("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		if (!file.exists()) {
+			Bukkit.broadcastMessage("§c§lFehler: §f§l557");
+			Bukkit.broadcastMessage("§cDatei: config.yml");
+			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
+			return null;
+		}
+		double x = (double) cfg.getInt("Team.Event Spawn.Location.X");
+		double y = (double) cfg.getInt("Team.Event Spawn.Location.Y");
+		double z = (double) cfg.getInt("Team.Event Spawn.Location.Z");
+		float yaw = (float) cfg.getInt("Team.Event Spawn.Location.Yaw");
+		float pitch = (float) cfg.getInt("Team.Event Spawn.Location.Pitch");
+		String w = cfg.getString("Team.Event Spawn.Location.World");
+		World world = Bukkit.getWorld(w);
+		Location loc = new Location(world, x, y, z, yaw, pitch);
+		p.sendMessage("§aEvent Spawn für Team '§f"+team+"§a' gesetzt!");
+		return loc;
 	}
 
 }
