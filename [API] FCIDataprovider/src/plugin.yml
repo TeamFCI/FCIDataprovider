@@ -1,0 +1,6 @@
+name: FCIDataprovider
+version: 1.0
+author: TeamFCI
+
+main: de.teamfci.dataprovider.dataprovider
+commands:
