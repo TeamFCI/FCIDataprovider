@@ -6,3 +6,5 @@ main: de.teamfci.dataprovider.dataprovider
 commands:
   ple:
     description: Shows Plugin-Status
+  fcid:
+    description: Shows FCI-BaukastenID

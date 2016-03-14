@@ -18,8 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class dataprovider extends JavaPlugin {
 
 	public void onEnable() {
-		FCIDPCommand cFcidpCommand = new FCIDPCommand();
-		getCommand("ple").setExecutor(cFcidpCommand);
+		this.getCommand("ple").setExecutor(new FCIDPCommand());
+		this.getCommand("fcid").setExecutor(new FCID());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp()) {
 				p.sendMessage("§eFCIDataprovider §awurde enabled!");
