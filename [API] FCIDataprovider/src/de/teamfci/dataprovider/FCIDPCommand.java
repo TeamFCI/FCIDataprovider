@@ -28,15 +28,9 @@ public class FCIDPCommand implements CommandExecutor {
 			}
 
 			p.sendMessage("§d§m----------------------------");
-			p.sendMessage("§f[§bFCIProvider§f] §b Project-Addons");
 			for (String s : names) {
 					p.sendMessage("§f[§bFCIProvider§f] §b Plugin " + s + " ist aktiv: " + pluginenabled.get(s));
 			}
-			p.sendMessage("§f[§bFCIGrafting§f] §b Plugins by §aTeamFCI");
-			p.sendMessage("§f[§bFCICrafting§f] §b /fcicr für weitere Infos");
-			p.sendMessage("§f[§bFCIChat§f] §b /fcic für weitere Infos");
-			p.sendMessage("§f[§bFCIPvP§f] §b /fcipvp für weitere Infos");
-			p.sendMessage("§f[§bFCItems§f] §b /fci für weitere Infos");
 			p.sendMessage("§d§m----------------------------");
 		}
 		

@@ -15,9 +15,9 @@ public class FCID implements CommandExecutor {
 			if(args.length == 0) {
 				p.sendMessage("FCI-BaukastenID");
 				p.sendMessage("andikandi §4ROT");
-				p.sendMessage("TraubiistGeil §aHELL GRÜN");
-				p.sendMessage("akkilp §eGELB");
+				p.sendMessage("Lord_Traube §aHELL GRÜN");
 				p.sendMessage("KinqNoooah §bHELL BLAU");
+				p.sendMessage("Bauteam XY §2DUNKEL GRÜN");
 			}
 		} else {
 			sender.sendMessage("FCI-BaukastenID");

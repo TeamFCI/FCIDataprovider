@@ -1,7 +1,7 @@
 name: FCIDataprovider
 version: 1.0
 author: TeamFCI
-
+depend: [Citizens] [FCIPvP] [FCICrafting] [FCIChat] [FCI] [FCIShop]
 main: de.teamfci.dataprovider.dataprovider
 commands:
   ple:
