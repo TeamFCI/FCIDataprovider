@@ -20,7 +20,7 @@ public class dataprovider extends JavaPlugin {
 	public void onEnable() {
 		this.getCommand("ple").setExecutor(new FCIDPCommand());
 		this.getCommand("fcid").setExecutor(new FCID());
-		this.getCommand("").setExecutor(new Timer());
+		this.getCommand("timer").setExecutor(new Timer());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp()) {
 				p.sendMessage("§eFCIDataprovider §awurde enabled!");
