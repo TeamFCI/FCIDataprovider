@@ -20,7 +20,6 @@ public class dataprovider extends JavaPlugin {
 	public void onEnable() {
 		this.getCommand("ple").setExecutor(new FCIDPCommand());
 		this.getCommand("fcid").setExecutor(new FCID());
-		this.getCommand("timer").setExecutor(new Timer());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp()) {
 				p.sendMessage("§eFCIDataprovider §awurde enabled!");
@@ -43,7 +42,7 @@ public class dataprovider extends JavaPlugin {
 					p.sendMessage("§f[§bFCIProvider§f] §b Plugin " + s + " ist aktiv: " + pluginenabled.get(s));
 				}
 			}
-			p.sendMessage("§f[§bFCIGrafting§f] §b Plugins by §aTeamFCI");
+			p.sendMessage("§f[§bFCIDataprovider§f] §b Plugins by §aTeamFCI");
 			p.sendMessage("§f[§bFCICrafting§f] §b /fcicr für weitere Infos");
 			p.sendMessage("§f[§bFCIChat§f] §b /fcic für weitere Infos");
 			p.sendMessage("§f[§bFCIPvP§f] §b /fcipvp für weitere Infos");
