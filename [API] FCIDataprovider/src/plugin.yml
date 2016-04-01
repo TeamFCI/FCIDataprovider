@@ -1,10 +1,11 @@
 name: FCIDataprovider
 version: 1.0
 author: TeamFCI
-depend: [Citizens, FCICrafting, FCIChat]
 main: de.teamfci.dataprovider.dataprovider
 commands:
   ple:
     description: Shows Plugin-Status
   fcid:
     description: Shows FCI-BaukastenID
+  throw:
+    description: Trows a FCIException

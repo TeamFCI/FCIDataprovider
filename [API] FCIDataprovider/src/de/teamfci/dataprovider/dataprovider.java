@@ -20,6 +20,7 @@ public class dataprovider extends JavaPlugin {
 	public void onEnable() {
 		this.getCommand("ple").setExecutor(new FCIDPCommand());
 		this.getCommand("fcid").setExecutor(new FCID());
+		this.getCommand("throw").setExecutor(new ThrowCommand());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp()) {
 				p.sendMessage("§eFCIDataprovider §awurde enabled!");
@@ -249,13 +250,15 @@ public class dataprovider extends JavaPlugin {
 		}
 		return type;
 	}
-	
+
 	public static Location getSpawnLocation(String team, Player p) {
-		File file = new File("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+		File file = new File(
+				"plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//" + team + "//config.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 		if (!file.exists()) {
 			Bukkit.broadcastMessage("§cDatei: config.yml");
-			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"
+					+ team + "//config.yml");
 			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
 			return null;
 		}
@@ -269,18 +272,19 @@ public class dataprovider extends JavaPlugin {
 		Location loc = new Location(world, x, y, z, yaw, pitch);
 		return loc;
 	}
-	
+
 	public static Location getPlayerLocationFromConfig(String LocType, Player p) {
-		File file = new File("plugins//Fortress-Combat-System//Player Configs//"+p.getName()+"//PvP Config.yml");
+		File file = new File("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//PvP Config.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 		Location loc = null;
 		if (!file.exists()) {
 			Bukkit.broadcastMessage("§cDatei: config.yml");
-			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Player Configs//"+p.getName()+"//PvP Config.yml");
+			Bukkit.broadcastMessage(
+					"§cPath: §7plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//PvP Config.yml");
 			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
 			return null;
 		}
-		if(LocType.toLowerCase().equals("pvp")) {
+		if (LocType.toLowerCase().equals("pvp")) {
 			double x = (double) cfg.getInt("Player.Event.PVP.Lastlocation.Location.X");
 			double y = (double) cfg.getInt("Player.Event.PVP.Lastlocation.Location.Y");
 			double z = (double) cfg.getInt("Player.Event.PVP.Lastlocation.Location.Z");
@@ -293,9 +297,10 @@ public class dataprovider extends JavaPlugin {
 		}
 		return loc;
 	}
-	
+
 	public static void setSpawnLocation(String team, Location loc, Player p) {
-		File file = new File("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+		File file = new File(
+				"plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//" + team + "//config.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 		cfg.set("Team.Event Spawn.Location.X", loc.getX());
 		cfg.set("Team.Event Spawn.Location.Y", loc.getY());
@@ -307,60 +312,111 @@ public class dataprovider extends JavaPlugin {
 			cfg.save(file);
 		} catch (IOException e) {
 			p.sendMessage("§cFehler beim Absepichern der Datei!");
-			p.sendMessage("plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			p.sendMessage(
+					"plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//" + team + "//config.yml");
 			e.printStackTrace();
 		}
 		if (!file.exists()) {
 			Bukkit.broadcastMessage("§cDatei: config.yml");
-			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"+team+"//config.yml");
+			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Fortress-Combat-PvP-System//Teams//"
+					+ team + "//config.yml");
 			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
 			return;
 		}
-		p.sendMessage("§aEvent Spawn für Team '§f"+team+"§a' gesetzt!");
+		p.sendMessage("§aEvent Spawn für Team '§f" + team + "§a' gesetzt!");
 	}
-	
-	public static void set(String SetterType, String InFilePath, Player p, String stringValue, int intValue, boolean boolValue) {
-		File file = new File("plugins//Fortress-Combat-System//Player Configs//"+p.getName()+"//PvP Config.yml");
+
+	public static void set(String SetterType, String InFilePath, Player p, String stringValue, int intValue,
+			boolean boolValue) {
+		File file = new File("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//PvP Config.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-		if(SetterType.toLowerCase().equals("string")) {
+		if (SetterType.toLowerCase().equals("string")) {
 			cfg.set(InFilePath, stringValue);
 		}
-		if(SetterType.toLowerCase().equals("integer")) {
+		if (SetterType.toLowerCase().equals("integer")) {
 			cfg.set(InFilePath, intValue);
 		}
-		if(SetterType.toLowerCase().equals("boolean")) {
+		if (SetterType.toLowerCase().equals("boolean")) {
 			cfg.set(InFilePath, boolValue);
 		}
-		if(SetterType.toLowerCase().equals("location")) {
+		if (SetterType.toLowerCase().equals("location")) {
 			Location loc = p.getLocation();
-			if(InFilePath.contains(".Location")) {
-				cfg.set(InFilePath+".X", loc.getX());
-				cfg.set(InFilePath+".Y", loc.getY());
-				cfg.set(InFilePath+".Z", loc.getZ());
-				cfg.set(InFilePath+".Yaw", loc.getYaw());
-				cfg.set(InFilePath+".Pitch", loc.getPitch());
-				cfg.set(InFilePath+".World", loc.getWorld().getName());
+			if (InFilePath.contains(".Location")) {
+				cfg.set(InFilePath + ".X", loc.getX());
+				cfg.set(InFilePath + ".Y", loc.getY());
+				cfg.set(InFilePath + ".Z", loc.getZ());
+				cfg.set(InFilePath + ".Yaw", loc.getYaw());
+				cfg.set(InFilePath + ".Pitch", loc.getPitch());
+				cfg.set(InFilePath + ".World", loc.getWorld().getName());
 			} else {
-				cfg.set(InFilePath+".Location.X", loc.getX());
-				cfg.set(InFilePath+".Location.Y", loc.getY());
-				cfg.set(InFilePath+".Location.Z", loc.getZ());
-				cfg.set(InFilePath+".Location.Yaw", loc.getYaw());
-				cfg.set(InFilePath+".Location.Pitch", loc.getPitch());
-				cfg.set(InFilePath+".Location.World", loc.getWorld().getName());
+				cfg.set(InFilePath + ".Location.X", loc.getX());
+				cfg.set(InFilePath + ".Location.Y", loc.getY());
+				cfg.set(InFilePath + ".Location.Z", loc.getZ());
+				cfg.set(InFilePath + ".Location.Yaw", loc.getYaw());
+				cfg.set(InFilePath + ".Location.Pitch", loc.getPitch());
+				cfg.set(InFilePath + ".Location.World", loc.getWorld().getName());
 			}
 		}
 		try {
 			cfg.save(file);
 		} catch (IOException e) {
 			p.sendMessage("§cFehler beim Absepichern der Datei!");
-			p.sendMessage("plugins//Fortress-Combat-System//Player Configs//"+p.getName()+"PvP Config.yml");
+			p.sendMessage("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "PvP Config.yml");
 			e.printStackTrace();
 		}
 		if (!file.exists()) {
 			Bukkit.broadcastMessage("§cDatei: config.yml");
-			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Player Configs//"+p.getName()+"PvP Config.yml");
+			Bukkit.broadcastMessage(
+					"§cPath: §7plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "PvP Config.yml");
 			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
 			return;
+		}
+	}
+	
+	public static String[] getClassRank(Player p) throws FCIException {
+		File file = new File("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//Ranked Config.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		String rank = "FEHLER 001: Datei nicht geunden";
+		String clazz = "FEHLER 001: Datei nicht geunden";
+		if (!file.exists()) {
+			throw new FCIException("dataprovider", "de.teamfci.dataprovider", "getClassRank()", 381, "Datei nicht gefunden", p);
+//			Bukkit.broadcastMessage("§cDatei: config.yml");
+//			Bukkit.broadcastMessage("§cPath: §7plugins//Fortress-Combat-System//Player Configs//" + p.getName()
+//					+ "//Ranked Config.yml");
+//			Bukkit.broadcastMessage("§ckonnte nicht gefunden werden!");
+//			return null;
+		} else {
+			clazz = cfg.getString("Player.Class");
+			rank = cfg.getString("Player.Rank");
+
+		}
+		String[] array = { clazz, rank };
+		return array;
+	}
+
+	public static void setClass(Player p, String newClass) {
+		File file = new File("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//Ranked Config.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		cfg.set("Player.Class", newClass);
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			p.sendMessage("§cFehler beim Absepichern der Datei!");
+			p.sendMessage("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "PvP Config.yml");
+			e.printStackTrace();
+		}
+	}
+
+	public static void setRank(Player p, String rank) {
+		File file = new File("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "//Ranked Config.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		cfg.set("Player.Rank", rank);
+		try {
+			cfg.save(file);
+		} catch (IOException e) {
+			p.sendMessage("§cFehler beim Absepichern der Datei!");
+			p.sendMessage("plugins//Fortress-Combat-System//Player Configs//" + p.getName() + "PvP Config.yml");
+			e.printStackTrace();
 		}
 	}
 
